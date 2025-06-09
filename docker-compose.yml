@@ -1,0 +1,26 @@
+services:
+    laravel-app:
+        build: .
+        ports:
+        - 8006:80
+        working_dir: /var/www/html
+        volumes:
+        - ./:/var/www/html
+        depends_on:
+            - mysql
+        env_file:
+            - ./.env
+        command: apache2-foreground
+    mysql:
+        image: mysql:8.0
+        volumes:
+         - lamp-mysql-data:/var/lib/mysql
+        environment:
+        - MYSQL_ROOT_PASSWORD=root
+        - MYSQL_DATABASE=testdb
+        ports:
+         - 3306:3306
+
+
+volumes:
+    lamp-mysql-data:

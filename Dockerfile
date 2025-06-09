@@ -33,5 +33,7 @@ RUN composer install
 # Permissions
 RUN chown -R www-data:www-data /var/www/html
 
+RUN php artisan migrate --force
+
 # Expose port
 EXPOSE 80

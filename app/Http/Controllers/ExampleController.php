@@ -13,7 +13,7 @@ class ExampleController extends Controller
     public function index()
     {
         $examples = Example::all();
-        return view('index', compact('examples'));
+        return view('examples.index', compact('examples'));
     }
 
     /**
@@ -45,7 +45,7 @@ class ExampleController extends Controller
             ]);
         }
 
-        return redirect('/')
+        return redirect('/examples')
                 ->with('success', 'successful creation!');
     }
 

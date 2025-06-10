@@ -3,8 +3,10 @@ FROM php:8.3-apache
 # Install dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
-    zip unzip curl libzip-dev npm\
+    zip unzip curl libzip-dev npm nodejs\
     && docker-php-ext-install zip pdo pdo_mysql pdo_pgsql pgsql
+
+RUN npm install && npm run build
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -29,8 +31,6 @@ COPY . .
 
 # Install PHP dependencies
 RUN composer install
-
-RUN npm install && npm run build
 
 # Permissions
 RUN chown -R www-data:www-data /var/www/html

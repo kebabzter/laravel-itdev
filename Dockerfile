@@ -40,4 +40,4 @@ RUN php artisan migrate:fresh --force --seed
 # Expose port
 EXPOSE 80
 
-CMD ["apache2-foreground"]
+CMD ["php artisan optimize:clear", "php artisan migrate:fresh --force --seed", "apache2-foreground"]

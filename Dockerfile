@@ -6,32 +6,32 @@ RUN apt-get update && apt-get install -y \
     zip unzip curl libzip-dev npm nodejs\
     && docker-php-ext-install zip pdo pdo_mysql pdo_pgsql pgsql
 
-RUN npm install && npm run build
 
-# Install Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+    # Install Composer
+    COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
-WORKDIR /var/www/html
+    # Set working directory
+    WORKDIR /var/www/html
 
-RUN a2enmod rewrite
+    RUN a2enmod rewrite
 
-ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+    ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+    RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+    RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-RUN docker-php-ext-install pdo pdo_mysql mysqli
+    RUN docker-php-ext-install pdo pdo_mysql mysqli
 
-RUN service apache2 restart
+    RUN service apache2 restart
 
 
-# Copy Laravel app
-COPY . .
+    # Copy Laravel app
+    COPY . .
 
-# Install PHP dependencies
-RUN composer install
+    # Install PHP dependencies
+    RUN composer install
 
+    RUN npm install && npm run build
 # Permissions
 RUN chown -R www-data:www-data /var/www/html
 

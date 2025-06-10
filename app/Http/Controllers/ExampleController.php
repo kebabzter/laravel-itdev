@@ -78,6 +78,7 @@ class ExampleController extends Controller
      */
     public function destroy(Example $example)
     {
-        //
+        $example->delete();
+        return redirect('/examples')->with('success', 'Example deleted successfully.');
     }
 }

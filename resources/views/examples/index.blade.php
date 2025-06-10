@@ -35,7 +35,14 @@
                             @if($examples->count() > 0)
                                 <ul class="space-y-2">
                                     @foreach($examples as $example)
-                                        <li class="border rounded p-2 bg-white bg-opacity-50 shadow-sm hover:bg-opacity-75 transition">{{ $example->name }}</li>
+                                        <li class="border rounded p-2 bg-white bg-opacity-50 shadow-sm hover:bg-opacity-75 transition flex justify-between items-center">
+                                            <span>{{ $example->name }}</span>
+                                            <form method="POST" action="{{ route('example.destroy', $example->id) }}" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="text-red-500 hover:text-red-700">Delete</button>
+                                            </form>
+                                        </li>
                                     @endforeach
                                 </ul>
                             @else

@@ -35,7 +35,7 @@ RUN npm install && npm run build
 # Permissions
 RUN chown -R www-data:www-data /var/www/html
 
-RUN php artisan migrate:fresh --force
+RUN php artisan migrate:fresh --force --seed
 
 # Expose port
 EXPOSE 80

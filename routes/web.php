@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     // In routes/web.php
     Route::post('/examples', [ExampleController::class, 'store'])->name('example.store');
     Route::delete('/examples/{example}', [ExampleController::class, 'destroy'])->name('example.destroy');
+    Route::patch('/examples/{example}/toggle-complete', [ExampleController::class, 'toggleComplete'])->name('example.toggle-complete');
 });
 
 

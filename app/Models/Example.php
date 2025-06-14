@@ -8,5 +8,6 @@ class Example extends Model
 {
     protected $fillable = [
             'name',
+            'isComplete'
     ];
 }

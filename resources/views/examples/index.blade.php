@@ -36,7 +36,20 @@
                                 <ul class="space-y-2">
                                     @foreach($examples as $example)
                                         <li class="border rounded p-2 bg-white bg-opacity-50 shadow-sm hover:bg-opacity-75 transition flex justify-between items-center">
-                                            <span>{{ $example->name }}</span>
+                                            <div class="flex items-center gap-2">
+                                                <form method="POST" action="{{ route('example.toggle-complete', $example->id) }}" class="inline">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="text-gray-500 hover:text-gray-700">
+                                                        @if($example->isComplete)
+                                                            <span class="material-icons text-green-500">check_circle</span>
+                                                        @else
+                                                            <span class="material-icons">radio_button_unchecked</span>
+                                                        @endif
+                                                    </button>
+                                                </form>
+                                                <span class="{{ $example->isComplete ? 'line-through text-gray-500' : '' }}">{{ $example->name }}</span>
+                                            </div>
                                             <form method="POST" action="{{ route('example.destroy', $example->id) }}" class="inline">
                                                 @csrf
                                                 @method('DELETE')

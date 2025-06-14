@@ -81,4 +81,23 @@ class ExampleController extends Controller
         $example->delete();
         return redirect('/examples')->with('success', 'Example deleted successfully.');
     }
+
+    /**
+     * Toggle the completion status of an example.
+     */
+    public function toggleComplete(Example $example)
+    {
+        $example->isComplete = !$example->isComplete;
+        $example->save();
+
+        if (request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Example completion status updated successfully',
+                'example' => $example
+            ]);
+        }
+
+        return redirect('/examples')->with('success', 'Example completion status updated successfully');
+    }
 }
